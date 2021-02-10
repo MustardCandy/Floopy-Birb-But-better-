@@ -1,17 +1,17 @@
- var c = document.getElementById("myCanvas");
+var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 
 
   var x = c.width / 20 + 100; //These 2 variables determine the starting circles location, in this case, the top left of the screen.
   var y = c.height / 20 - 50;
 
-  var dx = 5; //These variables will be used later to change the position of the circle.
-  var dy = 5; //Changing both of these numbers will also change the speed of the circle (in other words, how many units the circle moves per frame).
+  var dx = 5; //these will be used to determan the location of the circle as well as the speed if both numbers are changed
+  var dy = 5;
   console.log("correct file")
-  var gravity = 0.01; //Sets the gravity pulling the ball to the ground.
-  var damping = 0.75; //The rate at which the ball slows down.
-  var traction = 0.95; //Will make the ball stop.
-  var ballSize = 20; //Sets the circle's radius.
+  var gravity = 0.1; //the rate at which the ball is pulled down
+  var damping = 0.9; //restance on the ball
+  var traction = .1; //stops the ball
+  var ballSize = 20; //size of ball
 
   function drawCircle() {
     ctx.beginPath();
@@ -57,12 +57,9 @@ var ctx = c.getContext("2d");
   }
   setInterval(draw, 10);
 
-  document.addEventListener("keydown", makeBounce);
+  document.addEventListener("keyUp", makeBounce);
   function makeBounce(e) {
-    if (e.key == " ") {//When the space bar is pushed this will make the ball bounce
+    if (e.key == " ") {//makes ball go up
       dy -= 10;
-    }
-    if (e.key == "r") {//this will make the ball change directions
-      dx = -dx;
     }
   }
