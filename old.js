@@ -2,7 +2,7 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 
 //These 2 variables determine the starting circles location, in this case, the top left of the screen.
-var ball = {x: c.width/2, y: c.height/2, ballSize: 15}
+var ball = new component(30, 30, "smiley.gif", 10, 120, "image");
 var dx = 0; //Used to change where the ball is located
 var dy = 10; //
 var gravity = .07; //sets gravity
@@ -18,6 +18,7 @@ var score = 0; //tracks how many pipes you have passed through
 var spaceDifficulty = 400; //how frequently the pipes will apear after eachother
 var imageCounter = 0;
 var gameState = 1;
+
 
 function drawCircle() {
   ctx.beginPath();
