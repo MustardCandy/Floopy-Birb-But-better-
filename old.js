@@ -2,7 +2,7 @@ var c = document.getElementById("myCanvas");
 var ctx = c.getContext("2d");
 
 //These 2 variables determine the starting circles location, in this case, the top left of the screen.
-var ball = new component(30, 30, "smiley.gif", 10, 120, "image");
+var ball ={x: c.width/2, y: c.height/2, ballSize: 15, }
 var dx = 0; //Used to change where the ball is located
 var dy = 10; //
 var gravity = .07; //sets gravity
@@ -18,8 +18,25 @@ var score = 0; //tracks how many pipes you have passed through
 var spaceDifficulty = 400; //how frequently the pipes will apear after eachother
 var imageCounter = 0;
 var gameState = 1;
+var imgStart = new Image(); //basically creates the image
+imgStart.onload = function(){ //uploads the image onto the screen
+  draw(); //uses a function from below
+}
+imgStart.src="smiley.gif"; //source for where the image is coming from
+function displayScore(){
 
-
+}
+function drawBirb() {
+  console.log("work");
+ ctx.save(); //saves the present condition/state of the image/game
+ ctx.beginPath(); //starts the drawing
+ if (imageCounter == 0) { //this if draws the bird in the regular position/straight horizontally
+   ctx.drawImage(imgStart, ball.xPos-ball.ballSize-10, ball.yPos-ball.ballSize-10, ball.ballSize+40, ball.ballSize+20) //parameters for drawing the bird
+ ctx.fill(); //fills the image/drawing
+ ctx.stroke(); //finishes the drawing
+ ctx.restore(); //reuses the saved image
+}
+}
 function drawCircle() {
   ctx.beginPath();
   ctx.arc(ball.x, ball.y, ball.ballSize, 0, Math.PI*2); //The circle, on frame one, will always start at the top left, and its size will always be set to ballSize.
@@ -53,6 +70,7 @@ function makePipe(lowRectX, lowRectY, lowRectWid, lowRectHeight, upRectX, upRect
     ctx.fillStyle = "green"; //Sets the color of the circle to green.
     ctx.fill(); //Fills in the circle with the color provided in fillStyle.
     ctx.stroke(); //finish drawing the rectangle
+
   }
 }
 
@@ -79,6 +97,8 @@ function collisionCheck(lowRectX, lowRectY, lowRectWid, lowRectHeight, upRectX, 
 
 //This function draws the pipes and the ball as well as sicking the score up and checking for collision
 function draw() {
+  ctx.font = "30px Arial";
+  ctx.fillText("Score: " + score, 10, 10)
   ctx.clearRect(0, 0, myCanvas.width, myCanvas.height); //Clears the canvas every frame, so a new circle can be drawn.
   if (gameState == 1) {
     makePipe(rectLower.xPos, rectLower.yPos, rectLower.width, rectLower.height, rectUpper.xPos, rectUpper.yPos, rectUpper.width, rectUpper.height);//draws the pipes
@@ -113,6 +133,7 @@ function draw() {
       rectArray[i].xPosL --;//allows the pipes to move from right to left
       rectArray[i].xPosU --;//allows the pipes to move from right to left
     }
+    drawBirb();//draws the birb
     drawCircle();//draws the ball
     if (ball.x + dx > c.width - ball.ballSize || ball.x + dx < ball.ballSize) { //If the circle's x position exceeds the width of the canvas...
       dx = -dx; //The ball's x direction will be flipped, and it will bounce a specific distance (damping).
@@ -131,8 +152,11 @@ function draw() {
     timer ++;//increments the timmer to make the pipe placement closer
     difficultTimer ++;//increments to increase the difficulty
   }
+  ctx.font = "30px Arial";
+  ctx.fillText("Score: " + score, 10, 10)
   if (gameState == 2) {
     location.reload();
+
   }
 }
 
